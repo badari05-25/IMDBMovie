@@ -1,0 +1,67 @@
+<app-navbar></app-navbar>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Movie Page</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Latest movies</a>
+        </li>
+      </ul>
+      <form class="d-flex" [formGroup]="searchForm">
+        <input class="form-control me-2" type="text" placeholder="Search" formControlName="search" #databox>
+        <button class="btn btn-primary" type="button" (click)="checkmovies(databox.value)">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container">  
+<div class="row mt-2">
+  <label class="col-sm-2 text-center py-1">Movie Filter:</label>
+  <div class="col-sm-8 mb-1">
+    <select name="movietype" class="form-control" (change)="ChangeMovieType($event)">
+      <option>---- Select From The List ----</option>
+      <option [value]="tag.id" *ngFor="let tag of this.listing" >{{tag.name}}</option>
+    </select>
+  </div>
+  <div class="col-sm-2 text-center ">
+    <button (click)="updatemovi()" class="btn btn-danger ">Select</button>
+  </div>
+  </div>
+
+  <main id="main">
+    <div class="movie" *ngFor="let item of this.checkdata">
+      <img src="https://image.tmdb.org/t/p/w500/{{item.poster_path}}" alt="{{item.title}}">
+      <div class="movie-info">
+        <h3>{{item.title}}</h3>
+        <span class="green">{{item.vote_average}}</span>
+      </div>
+      <div class="overview">
+        {{item.overview}}
+        <br>
+        <br>
+        <!-- <button class="btn btn-danger" id="{{item.id}}" (click)="checkid(item.id)" >Watch</button> -->
+        <!-- <button class="btn btn-danger" routerLink="/display/{{item.id}}">Watch</button> -->
+        <button class="btn btn-danger" routerLink="/displaypage/{{item.id}}">Watch</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="pagination" #scroll>
+    <div class="page" id="prev" (click)="counterminus()" (click)="pageload()" (click)="ScrollTop()" >Previous</div>
+    <div class="current" id="current">{{number}}</div>
+    <div class="page" id="next" (click)="counterplus()" (click)="pageload()" (click)="ScrollTop()" >Next</div>
+  </div>
+</div>
+
+<div class="arrow-btn">
+  <a href="#"><span class="fas fa-angle-up">^</span></a>
+</div>
